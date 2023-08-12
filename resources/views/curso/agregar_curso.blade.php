@@ -1,0 +1,57 @@
+@extends('templates/layout')
+
+@section("tituloPagina", "Crear un nuevo registro")
+
+@section('contenido')
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <div class="card">
+        <h5 class="card-header">Agregar Curso</h5>
+        <div class="card-body">
+
+            <p class="card-text">
+            <form action="{{ route('curso.store')}}" method="POST">
+                @csrf
+                <!--Ingreso del ID-->
+                <label for="">ID</label>
+                <input type="text" name="id" class="form-control" required><br>
+
+                <!--Ingreso del Nombre-->
+                <label for="">Nombre</label>
+                <input type="text" name="nombre" class="form-control" required><br>
+
+                <div class="form-group">
+                    <label for="grado">Grado</label>
+                    <select name="grado_id" id="grado_id" class="form-control" required>
+                        <option value="">Seleccionar Grado</option>
+                        @foreach($grados as $grado)
+                            <option value="{{ $grado->id }}">{{ $grado->nombre }}</option>
+                        @endforeach
+                    </select>
+                </div><br>
+
+                <br>
+                <a href="{{route("grado.index")}}" class="btn btn-info">
+                    <span class="fas fa-undo-alt"></span> Regresar
+                </a>
+                <button class="btn btn-primary">
+                    <span class="fas fa-user-plus"></span> Agregar
+                </button>
+
+            </form>
+            </p>
+
+        </div>
+    </div>
+@endsection
